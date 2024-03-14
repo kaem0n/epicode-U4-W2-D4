@@ -1,9 +1,9 @@
-package entitites;
+package kaem0n.entities;
 
 import java.util.Random;
 
 public class Product {
-	private long id;
+	private final long id;
 	private String name;
 	private String category;
 	private double price;

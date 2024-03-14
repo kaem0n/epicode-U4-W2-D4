@@ -1,4 +1,4 @@
-package entitites;
+package kaem0n.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Random;
 
 public class Order {
-	private long id;
+	private final long id;
 	private String status;
-	private LocalDate orderDate;
+	private final LocalDate orderDate;
 	private LocalDate deliveryDate;
-	private List<Product> products;
-	private Customer customer;
+	private final List<Product> products;
+	private final Customer customer;
 
 	public Order(Customer customer) {
 		Random rndm = new Random();
@@ -26,7 +26,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", status=" + status + ", orderDate=" + orderDate + ", deliveryDate=" + deliveryDate
-				+ ", products=" + products + ", customer=" + customer + "]";
+				+ ", products (total: " + products.size() + ")=" + products + ", customer=" + customer + "]";
 	}
 
 	public double getTotal() {
