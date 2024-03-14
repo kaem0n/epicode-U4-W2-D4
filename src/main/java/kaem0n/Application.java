@@ -21,7 +21,7 @@ public class Application {
 
         List<Product> inventory = new ArrayList<>();
         inventory.add(new Product(faker.book().title(), "Books", 9.90));
-        inventory.add(new Product(faker.book().title(), "Books", 9.90));
+        inventory.add(new Product(faker.book().title(), "Books", 8.90));
         inventory.add(new Product(faker.beer().name(), "Alcoholics", 2.99));
         inventory.add(new Product(faker.beer().name(), "Alcoholics", 2.59));
         inventory.add(new Product(faker.food().vegetable(), "Food", 1.99));
@@ -55,6 +55,9 @@ public class Application {
         System.out.println();
         System.out.println("==== EXERCISE 2 ====");
         getTotalSpentByCustomer(totalOrders);
+        System.out.println();
+        System.out.println("==== EXERCISE 3 ====");
+        findTwoMostExpensive(inventory);
     }
 
     public static void getOrdersByCustomer(Customer customer, List<Order> orderList) {
@@ -74,5 +77,11 @@ public class Application {
         totalSpent.forEach((customerName, spent) -> {
             System.out.println("Customer " + customerName + " spent a grand total of: " + df.format(spent) + "€");
         });
+    }
+
+    public static void findTwoMostExpensive(List<Product> productList) {
+        List<Product> twoMostExpensive = productList.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed())
+                .limit(2).toList();
+        twoMostExpensive.forEach(System.out::println);
     }
 }
