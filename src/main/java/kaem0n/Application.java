@@ -58,6 +58,9 @@ public class Application {
         System.out.println();
         System.out.println("==== EXERCISE 3 ====");
         findTwoMostExpensive(inventory);
+        System.out.println();
+        System.out.println("==== EXERCISE 4 ====");
+        averageSpent(totalOrders);
     }
 
     public static void getOrdersByCustomer(Customer customer, List<Order> orderList) {
@@ -83,5 +86,12 @@ public class Application {
         List<Product> twoMostExpensive = productList.stream().sorted(Comparator.comparingDouble(Product::getPrice).reversed())
                 .limit(2).toList();
         twoMostExpensive.forEach(System.out::println);
+    }
+
+    public static void averageSpent(List<Order> orderList) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.DOWN);
+        double averageSpent = orderList.stream().mapToDouble(Order::getTotal).average().getAsDouble();
+        System.out.println("Average money spent: " + df.format(averageSpent) + "€");
     }
 }
