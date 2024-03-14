@@ -5,6 +5,8 @@ import kaem0n.entities.Customer;
 import kaem0n.entities.Order;
 import kaem0n.entities.Product;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -65,10 +67,12 @@ public class Application {
     }
 
     public static void getTotalSpentByCustomer(List<Order> orderList) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.DOWN);
         Map<String, Double> totalSpent = orderList.stream()
                 .collect(Collectors.groupingBy(order -> order.getCustomer().getName(), Collectors.summingDouble(Order::getTotal)));
         totalSpent.forEach((customerName, spent) -> {
-            System.out.println("Customer " + customerName + " spent a grand total of: " + spent);
+            System.out.println("Customer " + customerName + " spent a grand total of: " + df.format(spent) + "€");
         });
     }
 }
