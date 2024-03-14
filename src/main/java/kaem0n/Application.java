@@ -5,10 +5,8 @@ import kaem0n.entities.Customer;
 import kaem0n.entities.Order;
 import kaem0n.entities.Product;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Application {
     public static final Faker faker = new Faker(Locale.ITALY);
@@ -42,5 +40,27 @@ public class Application {
                 order.addProduct(inventory.get(new Random().nextInt(1, inventory.size())));
             }
         });
+
+        System.out.println();
+        System.out.println("==== EXERCISE 1 ====");
+        getOrdersByCustomer(customer1, totalOrders);
+        System.out.println();
+        getOrdersByCustomer(customer2, totalOrders);
+        System.out.println();
+        getOrdersByCustomer(customer3, totalOrders);
+        System.out.println();
+        getOrdersByCustomer(customer4, totalOrders);
+        System.out.println();
+        System.out.println("==== EXERCISE 2 ====");
+    }
+
+    public static Map<String, List<Order>> getOrdersByCustomer(Customer customer, List<Order> orderList) {
+        Map<String, List<Order>> ordersByCustomer = orderList.stream().filter(order -> order.getCustomer().equals(customer))
+                .collect(Collectors.groupingBy(order -> order.getCustomer().getName()));
+        ordersByCustomer.forEach((customerName, orders) -> {
+            System.out.println("Customer: " + customerName + "; Number of orders: " + orders.size());
+            orders.forEach(order -> System.out.println("- " + order));
+        });
+        return ordersByCustomer;
     }
 }
