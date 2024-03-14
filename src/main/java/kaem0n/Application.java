@@ -52,15 +52,23 @@ public class Application {
         getOrdersByCustomer(customer4, totalOrders);
         System.out.println();
         System.out.println("==== EXERCISE 2 ====");
+        getTotalSpentByCustomer(totalOrders);
     }
 
-    public static Map<String, List<Order>> getOrdersByCustomer(Customer customer, List<Order> orderList) {
+    public static void getOrdersByCustomer(Customer customer, List<Order> orderList) {
         Map<String, List<Order>> ordersByCustomer = orderList.stream().filter(order -> order.getCustomer().equals(customer))
                 .collect(Collectors.groupingBy(order -> order.getCustomer().getName()));
         ordersByCustomer.forEach((customerName, orders) -> {
             System.out.println("Customer: " + customerName + "; Number of orders: " + orders.size());
             orders.forEach(order -> System.out.println("- " + order));
         });
-        return ordersByCustomer;
+    }
+
+    public static void getTotalSpentByCustomer(List<Order> orderList) {
+        Map<String, Double> totalSpent = orderList.stream()
+                .collect(Collectors.groupingBy(order -> order.getCustomer().getName(), Collectors.summingDouble(Order::getTotal)));
+        totalSpent.forEach((customerName, spent) -> {
+            System.out.println("Customer " + customerName + " spent a grand total of: " + spent);
+        });
     }
 }
