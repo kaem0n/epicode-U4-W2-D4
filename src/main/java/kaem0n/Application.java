@@ -61,6 +61,9 @@ public class Application {
         System.out.println();
         System.out.println("==== EXERCISE 4 ====");
         averageSpent(totalOrders);
+        System.out.println();
+        System.out.println("==== EXERCISE 5 ====");
+        getTotalCategoryValue(inventory);
     }
 
     public static void getOrdersByCustomer(Customer customer, List<Order> orderList) {
@@ -93,5 +96,15 @@ public class Application {
         df.setRoundingMode(RoundingMode.DOWN);
         double averageSpent = orderList.stream().mapToDouble(Order::getTotal).average().getAsDouble();
         System.out.println("Average money spent: " + df.format(averageSpent) + "€");
+    }
+
+    public static void getTotalCategoryValue(List<Product> productList) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.DOWN);
+        Map<String, Double> totalCategoryValues = productList.stream()
+                .collect(Collectors.groupingBy(Product::getCategory, Collectors.summingDouble(Product::getPrice)));
+        totalCategoryValues.forEach((category, total) -> {
+            System.out.println("Category: " + category + "; Total value = " + df.format(total) + "€");
+        });
     }
 }
